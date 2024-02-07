@@ -21,7 +21,14 @@ const fetchUser=async()=>{
 }
 
 useEffect(()=>{
-   fetchUser();
+   const cancelFunctionCall=setTimeout(()=>{
+     fetchUser();
+   },500)
+
+   return ()=>{
+     clearTimeout(cancelFunctionCall)
+   }
+   
 },[searchParam]);
 
 const handleOnclick=(data)=>{
@@ -33,18 +40,19 @@ const handleOnclick=(data)=>{
   inputRef.current.focus();
 }
 
-const handleRemove=(email)=>{
+const handleRemove=(user)=>{
    const updatedDummyUser=dummyUser.filter((data)=>{
-        return data.email !== email;
+        return data.email !== user.email;
    })
+
    setDummyUser(updatedDummyUser);
 
 }
 
 const handleKeyDowwn=(e)=>{
-    if(e.key==="Backspace") {
-       dummyUser.pop();
-       dummyUserSet.pop();
+    if(e.key==="Backspace" && e.target.value==="" && dummyUser.length>0) {
+        const lastUser=dummyUser[dummyUser.length-1];
+        handleRemove(lastUser);
     }
 }
 
@@ -64,7 +72,7 @@ const handleKeyDowwn=(e)=>{
                         <Pill 
                          name={data?.firstName}
                          image={data?.image}
-                         onClick={()=>handleRemove(data?.email)}
+                         onClick={()=>handleRemove(data)}
                          key={data?.email}
                        />
                        </div>
@@ -79,7 +87,7 @@ const handleKeyDowwn=(e)=>{
                 onChange={(e)=>{setSearchParam(e.target.value)}}
                 value={searchParam}
                 placeholder='Search User'
-                onKeyDown={(e)=>handleKeyDowwn(e)}
+                onKeyDown={handleKeyDowwn}
                />
              </div>
               <ul className={`scrollbar flex flex-col gap-y-2 w-[80%] mx-auto bg-gray-200 rounded-lg px-4 py-3 max-h-[250px] overflow-auto ${suggestions.length===0 ? "hidden":"flex"}`}>
