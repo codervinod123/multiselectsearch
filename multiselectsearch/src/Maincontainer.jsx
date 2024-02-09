@@ -1,6 +1,11 @@
 import React,{useEffect,useRef,useState} from 'react'
 import Pill from './components/Pill';
 import { API_URL } from './utils/constant';
+import { FaMoon } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from './utils/themeslice';
+import { FaSun } from "react-icons/fa";
+
 
 const Maincontainer = () => {
 
@@ -8,6 +13,8 @@ const [dummyUser,setDummyUser]=useState([]);
 const [suggestions,setSuggestions]=useState([]);
 const [searchParam,setSearchParam]=useState("");
 const [dummyUserSet,setDummyUserSet]=useState(new Set());
+const [theme,setTheme]=useState(false);
+
 const inputRef=useRef();
 
 const fetchUser=async()=>{
@@ -56,10 +63,30 @@ const handleKeyDowwn=(e)=>{
     }
 }
 
+const Dispatch=useDispatch();
+
+
+const currentTheme=useSelector((store)=>store.themeslice.isLightTheme);
+useEffect(()=>{
+  setTheme(currentTheme)
+  console.log(theme);
+},[currentTheme])
+
+
+
+const handleClick=()=>{
+  Dispatch(toggleTheme());
+}
 
 
   return (
-    <div className='flex bg-slate-900 relative h-[100vh] w-[100%]'>
+    <div className={`flex relative h-[100vh] w-[100%] transition-all dura ${theme?"bg-white" : "bg-slate-800"} }`}>
+
+        {
+        !theme?
+        <FaMoon onClick={handleClick} className='text-white text-[25px] absolute right-4 top-4 cursor-pointer'/>
+       : <FaSun onClick={handleClick} className='text-yellow-500 text-[25px] absolute right-4 top-4 cursor-pointer'/>
+        }
         <div className='flex flex-col relative h-[60%] w-[80%] border bg-slate-400 rounded-md mx-auto my-auto'>
             
             <div className='relative'>
