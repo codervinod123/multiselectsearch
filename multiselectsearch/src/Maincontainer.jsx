@@ -80,17 +80,18 @@ const handleClick=()=>{
 
 
   return (
-    <div className={`flex relative h-[100vh] w-[100%] transition-all dura ${theme?"bg-white" : "bg-slate-800"} }`}>
+    <div className={`flex relative h-[100vh] w-[100%] transition-all dura ${theme?"bg-gray-300" : "bg-slate-800"} }`}>
 
         {
-        !theme?
-        <FaMoon onClick={handleClick} className='text-white text-[25px] absolute right-4 top-4 cursor-pointer'/>
-       : <FaSun onClick={handleClick} className='text-yellow-500 text-[25px] absolute right-4 top-4 cursor-pointer'/>
+        theme?
+        
+           <FaMoon onClick={handleClick} className='text-slate-800 text-[25px] absolute right-4 top-4 cursor-pointer '/>
+         :<FaSun onClick={handleClick} className='text-yellow-500 text-[25px] absolute right-4 top-4 cursor-pointer'/>
         }
-        <div className='flex flex-col relative h-[60%] w-[80%] border bg-slate-400 rounded-md mx-auto my-auto'>
+        <div className={`flex flex-col relative h-[60%] w-[80%] border rounded-md mx-auto my-auto ${theme?"bg-gray-600":"bg-gray-600"}`}>
             
             <div className='relative'>
-             <div className={`relative w-[80%] mx-auto my-2 rounded-full py-2 px-6 flex flex-wrap bg-gray-200 gap-x-2 gap-y-2`}>
+             <div className={`relative w-[80%] mx-auto my-2 rounded-full py-2 px-6 flex flex-wrap gap-x-2 gap-y-2 ${theme?"bg-gray-300":"bg-slate-800"} `}>
                 
                 {
                    dummyUser.map((data,index)=>{
@@ -110,18 +111,18 @@ const handleClick=()=>{
                <input 
                 ref={inputRef}
                 type="text"
-                className='bg-gray-200 focus:outline-none placeholder:text-gray-950'
+                className={`bg-gray-200 focus:outline-none  w-[100%] ${theme?"bg-gray-300":"bg-slate-800 text-white placeholder:text-white"}`}
                 onChange={(e)=>{setSearchParam(e.target.value)}}
                 value={searchParam}
                 placeholder='Search User'
                 onKeyDown={handleKeyDowwn}
                />
              </div>
-              <ul className={`scrollbar flex flex-col gap-y-2 w-[80%] mx-auto bg-gray-200 rounded-lg px-4 py-3 max-h-[250px] overflow-auto ${suggestions.length===0 ? "hidden":"flex"}`}>
+              <ul className={`scrollbar flex flex-col gap-y-2 w-[80%] mx-auto bg-gray-200 rounded-lg px-4 py-3 max-h-[250px] overflow-auto ${theme?"bg-gray-400":"bg-gray-800"} ${suggestions.length===0 ? "hidden":"flex"}`}>
                 {
                   suggestions.map((data)=>{
                     return !dummyUserSet.has(data.email)?  (
-                        <li key={data.email} onClick={()=>handleOnclick(data)} className='flex gap-x-4 py-1 cursor-pointer hover:bg-slate-400 rounded-md transition-all duration-500'>
+                        <li key={data.email} onClick={()=>handleOnclick(data)} className={`flex gap-x-4 py-1 cursor-pointer rounded-md transition-all duration-500 ${theme?"hover:bg-gray-600 ":"hover:bg-slate-400 text-white"}`}>
                            <img className='w-[30px] h-[30px] rounded-full' src={data?.image} alt="user_image" />
                            <span>{data?.firstName} {data?.lastName}</span>
                         </li> 
