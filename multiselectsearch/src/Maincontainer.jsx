@@ -111,7 +111,7 @@ const handleClick=()=>{
                <input 
                 ref={inputRef}
                 type="text"
-                className={`bg-gray-200 focus:outline-none  w-[100%] ${theme?"bg-gray-300":"bg-slate-800 text-white placeholder:text-white"}`}
+                className={`bg-gray-200 focus:outline-none  w-[100%] ${theme?"bg-gray-300 text-black placeholder:text-black":"bg-slate-800 text-white placeholder:text-white"}`}
                 onChange={(e)=>{setSearchParam(e.target.value)}}
                 value={searchParam}
                 placeholder='Search User'
